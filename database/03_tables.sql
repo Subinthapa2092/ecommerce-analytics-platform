@@ -27,3 +27,16 @@ create table dbo.Categories
     constraint FK_Categories_Parent foreign key (ParentCategoryID)
         references dbo.Categories(CategoryID)
 );
+--- Creating the Products Table 
+use EcommerceAnalytics
+create table dbo.Products
+(
+ProductID int identity(1,1) not null,
+ProductName nvarchar(100) not null,
+Price Decimal(10,2) not null,
+CategoryID int not null,
+IsActive bit default (1) not null,
+constraint PK_Products primary key(ProductID),
+constraint FK_Products_categories 
+Foreign key (CategoryID) references dbo.Categories(CategoryID),
+constraint ck_Products_Price check (price >0));
