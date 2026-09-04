@@ -18,3 +18,9 @@ values('iphone 15',99900,2),('Samsung Galaxy S24',799900.99,2);
 -- inserting the values on the Order table 
 insert into dbo.Orders(CustomerID,Status) values(1,'Pending'),
 (2,'Shipped'),(3,'Delivered');
+---inserting the values of the OrderItems 
+
+insert into dbo.OrderItems(OrderID,ProductID,Quantity,UnitPrice)values
+(1,2,1,999.99),
+(2,3,2,79.00),
+(3,3,5,50.00);

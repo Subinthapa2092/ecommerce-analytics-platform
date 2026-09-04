@@ -53,3 +53,21 @@ constraint FK_Orders_Customers foreign key (CustomerID)
 references dbo.Customers(CustomerID),
 constraint CK_Orders_Status check(Status in ('Pending', 'Shipped', 'Delivered', 'Cancelled'))
 );
+
+-- Creating the Orders Items table 
+
+create table dbo.OrderItems
+(OrderItemID int identity(1,1) not null,
+OrderID int not null,
+ProductID int not null,
+Quantity int not null,
+UnitPrice decimal(10,2) not null,
+constraint PK_OrderItems primary key(OrderItemID),
+constraint FK_OrderItems_Orders foreign key (OrderID)
+references dbo.Orders(OrderID),
+constraint Fk_OrderItems_Products 
+foreign key(ProductID)
+references dbo.Products(ProductID),
+constraint CK_OrderItems_Quantity 
+check(Quantity > 0)
+);
