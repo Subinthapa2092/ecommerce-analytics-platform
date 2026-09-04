@@ -40,3 +40,16 @@ constraint PK_Products primary key(ProductID),
 constraint FK_Products_categories 
 Foreign key (CategoryID) references dbo.Categories(CategoryID),
 constraint ck_Products_Price check (price >0));
+
+--- Creating the Orders Table's 
+use EcommerceAnalytics
+create table dbo.Orders(
+OrderID int identity(1,1) not null,
+CustomerID int not null,
+OrderDate Datetime2 default (sysutcdatetime()) not null,
+Status Nvarchar(25) default ('Pending') not null,
+constraint PK_Orders primary key (OrderID),
+constraint FK_Orders_Customers foreign key (CustomerID)
+references dbo.Customers(CustomerID),
+constraint CK_Orders_Status check(Status in ('Pending', 'Shipped', 'Delivered', 'Cancelled'))
+);

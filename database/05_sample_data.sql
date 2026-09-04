@@ -14,3 +14,7 @@ select * from dbo.Categories;
 --- inserting the values on the product table
 insert into dbo.Products(ProductName,Price,CategoryID)
 values('iphone 15',99900,2),('Samsung Galaxy S24',799900.99,2);
+
+-- inserting the values on the Order table 
+insert into dbo.Orders(CustomerID,Status) values(1,'Pending'),
+(2,'Shipped'),(3,'Delivered');
