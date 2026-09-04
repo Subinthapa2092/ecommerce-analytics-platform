@@ -28,12 +28,10 @@ Goal: go from a raw transactional SQL Server database → business analytics →
 
 ## Build Log
 
-### Day 6 — Phase 1: Database Foundation
-- Created `EcommerceAnalytics` database
-- Created `Customers` table with core columns
-- Added constraints: PK, UNIQUE email, CHECK constraints, DEFAULT values
-- Added `IX_Customers_Email` index
-- Inserted sample data for testing
+### Day 10 — OrderItems (junction table)
+- Created OrderItems linking Orders + Products (two FKs)
+- Learned why UnitPrice is stored separately from Products.Price
+- Verified Quantity CHECK constraint rejects 0/negative values
 
 ## Folder Structure
 
@@ -60,5 +58,5 @@ EcommerceAnalytics/
 ## How to Run
 
 1. Open SQL Server Management Studio (or Azure Data Studio).
-2. Run scripts in `database/` **in numeric order** (01 → 06).
+2. Run scripts in `database/` **in numeric order** (01 → 10).
 3. Verify with `SELECT * FROM dbo.Customers;`
