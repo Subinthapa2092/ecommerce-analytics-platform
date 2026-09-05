@@ -71,3 +71,20 @@ references dbo.Products(ProductID),
 constraint CK_OrderItems_Quantity 
 check(Quantity > 0)
 );
+
+-- Creating the  Payments table 
+
+use EcommerceAnalytics
+create table dbo.Payments
+(
+    PaymentID int identity(1,1) not null,
+    OrderID int not null,
+    Amount decimal(10,2) not null,
+    Method nvarchar(20) not null,
+    PaidAt datetime2 default(sysutcdatetime()) not null,
+    constraint PK_Payments primary key(PaymentID),
+    constraint FK_Payments_Orders foreign key(OrderID) 
+        references dbo.Orders(OrderID),
+    constraint CK_Payments_Amount check(Amount>0),
+    constraint CK_Payments_Method check(Method IN ('Cash','Card','Online'))
+);

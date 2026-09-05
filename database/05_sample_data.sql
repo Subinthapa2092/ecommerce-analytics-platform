@@ -24,3 +24,11 @@ insert into dbo.OrderItems(OrderID,ProductID,Quantity,UnitPrice)values
 (1,2,1,999.99),
 (2,3,2,79.00),
 (3,3,5,50.00);
+--- select db_name(); looking the database name 
+-- inserting the rows in the payment table 
+
+
+insert into dbo.Payments(OrderID,Amount,Method)
+values(1,50.00,'Cash'),
+(2,20.00,'Online'),
+(3,500.00,'Card');
