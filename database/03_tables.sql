@@ -88,3 +88,17 @@ create table dbo.Payments
     constraint CK_Payments_Amount check(Amount>0),
     constraint CK_Payments_Method check(Method IN ('Cash','Card','Online'))
 );
+
+-- creatted the Inventory table 
+create table dbo.Inventory
+( InventoryID int identity(1,1) not null,
+ProductID int not null,
+StockQuantity int not null,
+LastRestockedAt datetime2 default (Sysutcdatetime()) not null,
+constraint PK_Inventory primary key(InventoryID),
+constraint FK_Inventory_Products foreign key (ProductID)
+references dbo.Products(ProductID),
+constraint UQ_Inventory_Product unique(ProductID),
+constraint CK_Inventory_Stock check (StockQuantity >=0)
+);
+go

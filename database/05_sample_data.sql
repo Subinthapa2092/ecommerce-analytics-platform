@@ -15,6 +15,8 @@ select * from dbo.Categories;
 insert into dbo.Products(ProductName,Price,CategoryID)
 values('iphone 15',99900,2),('Samsung Galaxy S24',799900.99,2);
 
+select * from dbo.Products;
+
 -- inserting the values on the Order table 
 insert into dbo.Orders(CustomerID,Status) values(1,'Pending'),
 (2,'Shipped'),(3,'Delivered');
@@ -32,3 +34,7 @@ insert into dbo.Payments(OrderID,Amount,Method)
 values(1,50.00,'Cash'),
 (2,20.00,'Online'),
 (3,500.00,'Card');
+
+-- inserted the sample of the 2 data 
+insert into dbo.inventory(ProductID,StockQuantity)values
+(1,50),(2,25);
