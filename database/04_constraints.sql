@@ -7,3 +7,16 @@ alter table dbo.Customers
 add constraint CK_Customers_DOB 
 check(DateofBirth <= cast(getDate() as Date));
 
+-- Day 14: Data quality fixes from Day 13 audit
+
+ALTER TABLE dbo.Products
+    ADD CONSTRAINT CK_Products_Name_NotEmpty
+    CHECK (LEN(ProductName) > 0);
+
+ALTER TABLE dbo.OrderItems
+    ADD CONSTRAINT CK_OrderItems_UnitPrice
+    CHECK (unitprice > 0);   -- fill this in yourself first
+
+ALTER TABLE dbo.Orders
+    ADD CONSTRAINT CK_Orders_NoFutureDate
+    CHECK (OrderDate <= SYSUTCDATETIME());

@@ -37,16 +37,26 @@ A portfolio-grade E-Commerce Analytics Platform built progressively alongside DP
 * Built 7 core tables.
 * Added primary keys, foreign keys, UNIQUE and CHECK constraints.
 * Tested relationships and invalid data cases.
-
 ### Day 13 — Data Quality Audit
+Tested 3 tables by attempting invalid inserts, to find gaps before writing fixes.
 
 Found three issues:
-
-* Products allow empty names.
-* OrderItems allow negative prices.
-* Orders allow future dates.
+- Products allow empty names.
+- OrderItems allow negative prices.
+- Orders allow future dates.
 
 **Next:** Fix the identified constraints and continue the SQL Server build.
+
+### Day 14 — Data Quality Fixes
+Closed the three gaps found in yesterday's audit with new CHECK constraints:
+- `CK_Products_Name_NotEmpty` — blocks empty-string product names
+- `CK_OrderItems_UnitPrice` — blocks zero/negative unit prices
+- `CK_Orders_NoFutureDate` — blocks order dates set in the future
+
+Re-ran yesterday's failing test inserts to confirm all three are now rejected.
+
+**Phase 3 (Data Quality + Constraints) — one day remaining (Day 15: audit the remaining 4 tables + write documentation).**
+
 
 ## Folder Structure
 
@@ -89,4 +99,4 @@ SELECT * FROM dbo.Customers;
 
 ## Status
 
-🚧 **Currently in development — Day 13**
+🚧 **Currently in development — Day 14**
