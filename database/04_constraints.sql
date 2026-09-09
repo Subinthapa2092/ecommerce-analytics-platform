@@ -20,3 +20,7 @@ ALTER TABLE dbo.OrderItems
 ALTER TABLE dbo.Orders
     ADD CONSTRAINT CK_Orders_NoFutureDate
     CHECK (OrderDate <= SYSUTCDATETIME());
+-- Day 15: Data quality fixes for the Category table and Customers table
+
+alter table dbo.Categories add constraint ck_Categories_Name_NotEmpty check(len(CategoryName) >0);
+alter table dbo.Customers add constraint ck_Customers_FirstName_LastName_NotEmpty check(len(FirstName) >0 and len(LastName) >0);
