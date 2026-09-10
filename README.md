@@ -16,7 +16,7 @@ Goal: go from a raw transactional SQL Server database → business analytics →
 | 1 | Database Foundation | ✅ Done (Day 6) |
 | 2 | Tables + Relationships | ✅ Done (Days 7–12) |
 | 3 | Data Quality + Constraints | ✅ Done (Days 13–15) |
-| 4 | SQL Querying | ⬜ Not started (Days 16–23) |
+| 4 | SQL Querying | 🟡 In progress (started Day 16, runs 16–23) |
 | 5 | Business Analytics | ⬜ Not started (Days 24–30) |
 | 6 | Views + Procedures + Functions | ⬜ Not started (Days 31–35) |
 | 7 | Performance Optimization | ⬜ Not started (Days 36–39) |
@@ -84,6 +84,11 @@ Goal: go from a raw transactional SQL Server database → business analytics →
 - Wrote `documentation/data-quality-rules.md` — full constraint reference for all 7 tables
 - **Phase 3 (Data Quality + Constraints) complete — schema is fully hardened**
 
+### Day 16 — Basic SELECT Queries
+- Started `queries/basic_queries.sql` — first file in Phase 4 (SQL Querying)
+- Practiced `WHERE`, `ORDER BY`, `LIKE`, `TOP`
+- Queries written: customers by city, products under a price threshold (cheapest first), 3 most recent orders, customers with Gmail addresses
+
 ## Folder Structure
 
 ```
@@ -98,6 +103,7 @@ EcommerceAnalytics/
 ├── documentation/
 │   └── data-quality-rules.md
 ├── queries/
+│   └── basic_queries.sql
 ├── views/
 ├── procedures/
 ├── functions/
@@ -112,3 +118,4 @@ EcommerceAnalytics/
 1. Open SQL Server Management Studio (or Azure Data Studio).
 2. Run scripts in `database/` **in numeric order** (01 → 06).
 3. Verify with `SELECT * FROM dbo.Customers;`
+4. Explore query examples in `queries/basic_queries.sql`.
