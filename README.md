@@ -16,7 +16,7 @@ Goal: go from a raw transactional SQL Server database → business analytics →
 | 1 | Database Foundation | ✅ Done (Day 6) |
 | 2 | Tables + Relationships | ✅ Done (Days 7–12) |
 | 3 | Data Quality + Constraints | ✅ Done (Days 13–15) |
-| 4 | SQL Querying | 🟡 In progress (started Day 16, runs 16–23) |
+| 4 | SQL Querying | 🟡 In progress (started Day 17, runs 16–23) |
 | 5 | Business Analytics | ⬜ Not started (Days 24–30) |
 | 6 | Views + Procedures + Functions | ⬜ Not started (Days 31–35) |
 | 7 | Performance Optimization | ⬜ Not started (Days 36–39) |
@@ -89,6 +89,11 @@ Goal: go from a raw transactional SQL Server database → business analytics →
 - Practiced `WHERE`, `ORDER BY`, `LIKE`, `TOP`
 - Queries written: customers by city, products under a price threshold (cheapest first), 3 most recent orders, customers with Gmail addresses
 
+### Day 17 — First JOINs
+- Started `queries/joins.sql`
+- Joined Customers + Orders to see customer names alongside their orders
+- Joined Orders + OrderItems + Products (3-table join) to see actual product names, quantities, and prices per order
+
 ## Folder Structure
 
 ```
@@ -104,6 +109,7 @@ EcommerceAnalytics/
 │   └── data-quality-rules.md
 ├── queries/
 │   └── basic_queries.sql
+│   └── joins.sql
 ├── views/
 ├── procedures/
 ├── functions/
