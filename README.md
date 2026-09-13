@@ -16,7 +16,7 @@ Goal: go from a raw transactional SQL Server database → business analytics →
 | 1 | Database Foundation | ✅ Done (Day 6) |
 | 2 | Tables + Relationships | ✅ Done (Days 7–12) |
 | 3 | Data Quality + Constraints | ✅ Done (Days 13–15) |
-| 4 | SQL Querying | 🟡 In progress (started Day 17, runs 16–23) |
+| 4 | SQL Querying | 🟡 In progress (started Day 19, runs 16–23) |
 | 5 | Business Analytics | ⬜ Not started (Days 24–30) |
 | 6 | Views + Procedures + Functions | ⬜ Not started (Days 31–35) |
 | 7 | Performance Optimization | ⬜ Not started (Days 36–39) |
@@ -94,6 +94,19 @@ Goal: go from a raw transactional SQL Server database → business analytics →
 - Joined Customers + Orders to see customer names alongside their orders
 - Joined Orders + OrderItems + Products (3-table join) to see actual product names, quantities, and prices per order
 
+### Day 18 — Aggregate Functions and GROUP BY
+- Started `queries/aggregates.sql`
+- Practiced `COUNT`, `SUM`, `AVG` combined with `GROUP BY` on real data
+- Queries: orders grouped by status, total revenue per product (joining OrderItems + Products), average payment amount per method, and products filtered with `HAVING` based on total revenue
+
+### Day 19 — Subqueries
+- Started `queries/subqueries.sql`
+- Practiced nesting a `SELECT` inside another query's `WHERE` or `HAVING` clause
+- Queries: products priced above the average, customers who have placed at least one order (using `IN` instead of a JOIN), the single most expensive product (using `MAX`), and orders with a total value above the overall average order value
+- Key mistake caught and fixed: pointing a subquery at the wrong table/column (e.g. comparing CustomerID against OrderID) — same "which table, which column" discipline as foreign keys
+
+
+
 ## Folder Structure
 
 ```
@@ -108,8 +121,10 @@ EcommerceAnalytics/
 ├── documentation/
 │   └── data-quality-rules.md
 ├── queries/
-│   └── basic_queries.sql
-│   └── joins.sql
+│   ├── basic_queries.sql
+│   ├── joins.sql
+│   ├── aggregates.sql        
+│   └── subqueries.sql        ← Day 19
 ├── views/
 ├── procedures/
 ├── functions/
