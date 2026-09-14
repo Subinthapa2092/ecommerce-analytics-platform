@@ -16,7 +16,7 @@ Goal: go from a raw transactional SQL Server database → business analytics →
 | 1 | Database Foundation | ✅ Done (Day 6) |
 | 2 | Tables + Relationships | ✅ Done (Days 7–12) |
 | 3 | Data Quality + Constraints | ✅ Done (Days 13–15) |
-| 4 | SQL Querying | 🟡 In progress (started Day 19, runs 16–23) |
+| 4 | SQL Querying | 🟡 In progress (started Day 20, runs 16–23) |
 | 5 | Business Analytics | ⬜ Not started (Days 24–30) |
 | 6 | Views + Procedures + Functions | ⬜ Not started (Days 31–35) |
 | 7 | Performance Optimization | ⬜ Not started (Days 36–39) |
@@ -105,6 +105,11 @@ Goal: go from a raw transactional SQL Server database → business analytics →
 - Queries: products priced above the average, customers who have placed at least one order (using `IN` instead of a JOIN), the single most expensive product (using `MAX`), and orders with a total value above the overall average order value
 - Key mistake caught and fixed: pointing a subquery at the wrong table/column (e.g. comparing CustomerID against OrderID) — same "which table, which column" discipline as foreign keys
 
+### Day 20 — CTEs (Common Table Expressions)
+- Started `queries/ctes.sql`
+- Rewrote subquery-style logic using `WITH ... AS (...)` for readability
+- Queries: products above average price, orders above average order value, customer order counts
+
 
 
 ## Folder Structure
@@ -124,7 +129,9 @@ EcommerceAnalytics/
 │   ├── basic_queries.sql
 │   ├── joins.sql
 │   ├── aggregates.sql        
-│   └── subqueries.sql        ← Day 19
+│   └── subqueries.sql        
+│   └── ctes.sql   ← Day 20
+│
 ├── views/
 ├── procedures/
 ├── functions/
