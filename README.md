@@ -110,7 +110,16 @@ Goal: go from a raw transactional SQL Server database → business analytics →
 - Rewrote subquery-style logic using `WITH ... AS (...)` for readability
 - Queries: products above average price, orders above average order value, customer order counts
 
+### Day 21 — First Window Function (RANK)
+- Started `queries/window_functions.sql`
+- Learned `RANK() OVER (ORDER BY ...)` — ranks rows without collapsing them the way GROUP BY alone does
+- Queries: ranked products by total revenue generated, ranked customers by total amount spent
 
+### Day 22 — Running Totals (SUM OVER, PARTITION BY)
+- Continued `queries/window_functions.sql`
+- Learned `SUM() OVER (ORDER BY ...)` for cumulative/running totals, and `PARTITION BY` to reset a calculation separately per group
+- Queries: running total of revenue by order date, order count per customer restarting at 1 for each customer
+- **Phase 4 (SQL Querying) nearing completion** — basics, joins, aggregates, subqueries, CTEs, and window functions all covered
 
 ## Folder Structure
 
@@ -130,7 +139,8 @@ EcommerceAnalytics/
 │   ├── joins.sql
 │   ├── aggregates.sql        
 │   └── subqueries.sql        
-│   └── ctes.sql   ← Day 20
+│   └── ctes.sql   
+│   └── window_functions.sql   ← Day 22
 │
 ├── views/
 ├── procedures/
