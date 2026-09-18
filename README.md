@@ -1,13 +1,10 @@
 # Ecommerce Analytics Platform
 
-A portfolio-grade E-Commerce Analytics Platform, built progressively alongside DP-800 study.
-Goal: go from a raw transactional SQL Server database → business analytics → Power BI dashboard → backend API → frontend.
+A portfolio-grade E-Commerce Analytics Platform, built progressively alongside DP-800 study. The goal is to go from a raw transactional SQL Server database, through business analytics, to a Power BI dashboard, a backend API, and finally a frontend.
 
 ## Tech Stack (planned)
-- Database: SQL Server (T-SQL)
-- Analytics/BI: Power BI
-- Backend: FastAPI (Python)
-- Frontend: React
+
+Database: SQL Server (T-SQL). Analytics/BI: Power BI. Backend: FastAPI (Python). Frontend: React.
 
 ## Roadmap
 
@@ -16,8 +13,8 @@ Goal: go from a raw transactional SQL Server database → business analytics →
 | 1 | Database Foundation | ✅ Done (Day 6) |
 | 2 | Tables + Relationships | ✅ Done (Days 7–12) |
 | 3 | Data Quality + Constraints | ✅ Done (Days 13–15) |
-| 4 | SQL Querying | 🟡 In progress (started Day 20, runs 16–23) |
-| 5 | Business Analytics | ⬜ Not started (Days 24–30) |
+| 4 | SQL Querying | ✅ Done (Days 16–23) |
+| 5 | Business Analytics | 🟡 In progress (started Day 24, runs 24–30) |
 | 6 | Views + Procedures + Functions | ⬜ Not started (Days 31–35) |
 | 7 | Performance Optimization | ⬜ Not started (Days 36–39) |
 | 8 | Security | ⬜ Not started (Days 40–42) |
@@ -30,96 +27,80 @@ Goal: go from a raw transactional SQL Server database → business analytics →
 ## Build Log
 
 ### Day 6 — Customers table
-- Created `EcommerceAnalytics` database
-- Created `Customers` table with core columns
-- Added `UNIQUE` on Email, `CHECK` on DateOfBirth (no future dates), `CHECK` on Gender
-- Inserted sample customers
+
+Created the `EcommerceAnalytics` database and the `Customers` table with its core columns. Added a `UNIQUE` constraint on Email, a `CHECK` on DateOfBirth to block future dates, and a `CHECK` on Gender. Inserted sample customers to confirm everything worked.
 
 ### Day 7 — Categories table
-- Created `Categories` table with a self-referencing FK (`ParentCategoryID → CategoryID`)
-- Supports subcategories (e.g. Electronics → Phones)
-- Inserted one parent + one child category to verify the FK
+
+Created the `Categories` table with a self-referencing foreign key (`ParentCategoryID → CategoryID`), so the schema supports subcategories such as Electronics → Phones. Inserted one parent category and one child category to verify the foreign key worked correctly.
 
 ### Day 8 — Products table
-- Created `Products` table with FK to Categories
-- Added `CHECK (Price > 0)`
-- Verified FK rejects a non-existent CategoryID
+
+Created the `Products` table with a foreign key to Categories, and added a `CHECK (Price > 0)` constraint. Verified the foreign key correctly rejects a non-existent CategoryID.
 
 ### Day 9 — Orders table
-- Created `Orders` table with FK to Customers
-- Added `CHECK` restricting Status to `Pending`, `Shipped`, `Delivered`, `Cancelled`
-- Verified CHECK rejects an invalid status value
+
+Created the `Orders` table with a foreign key to Customers, and added a `CHECK` constraint restricting Status to `Pending`, `Shipped`, `Delivered`, or `Cancelled`. Verified the constraint rejects an invalid status value.
 
 ### Day 10 — OrderItems (junction table)
-- Created `OrderItems` linking Orders + Products (two FKs)
-- Learned why `UnitPrice` is stored separately from `Products.Price` (price history at time of sale)
-- Verified `Quantity` CHECK constraint rejects 0/negative values
+
+Created `OrderItems`, linking Orders and Products through two foreign keys. Learned why `UnitPrice` is stored separately from `Products.Price` — so historical orders keep the price at the time of sale, even if the product's current price later changes. Verified the `Quantity` CHECK constraint rejects zero or negative values.
 
 ### Day 11 — Payments table
-- Created `Payments` table with FK to Orders
-- Added `CHECK` on Amount (> 0) and Method (Cash/Card/Online)
-- Verified both CHECK constraints reject invalid values
+
+Created the `Payments` table with a foreign key to Orders, and added CHECK constraints on Amount (greater than 0) and Method (Cash, Card, or Online). Verified both constraints reject invalid values.
 
 ### Day 12 — Inventory table
-- Created `Inventory` table with FK to Products
-- Added `UNIQUE` on ProductID (one stock record per product)
-- Added `CHECK (StockQuantity >= 0)`
-- **Phase 2 (Tables + Relationships) complete — all 7 tables built**
+
+Created the `Inventory` table with a foreign key to Products, a `UNIQUE` constraint on ProductID so each product has exactly one stock record, and a `CHECK (StockQuantity >= 0)` constraint. This completed Phase 2 — all 7 tables were now built.
 
 ### Day 13 — Data Quality Audit
-- Tested 3 tables by attempting invalid inserts, to find gaps before writing fixes
-- Found three issues: Products allowed empty names, OrderItems allowed negative prices, Orders allowed future dates
+
+Tested three tables by attempting invalid inserts, to find gaps before writing fixes. Found three issues: Products allowed empty names, OrderItems allowed negative prices, and Orders allowed future dates.
 
 ### Day 14 — Data Quality Fixes
-- Closed the three gaps found in the Day 13 audit with new CHECK constraints:
-  - `CK_Products_Name_NotEmpty` — blocks empty-string product names
-  - `CK_OrderItems_UnitPrice` — blocks zero/negative unit prices
-  - `CK_Orders_NoFutureDate` — blocks order dates set in the future
-- Re-ran the Day 13 failing tests to confirm all three are now rejected
+
+Closed the three gaps found in the Day 13 audit with new CHECK constraints: `CK_Products_Name_NotEmpty` blocks empty-string product names, `CK_OrderItems_UnitPrice` blocks zero or negative unit prices, and `CK_Orders_NoFutureDate` blocks order dates set in the future. Re-ran the Day 13 failing tests to confirm all three are now correctly rejected.
 
 ### Day 15 — Final Data Quality Pass + Documentation
-- Tested the remaining tables (Categories, Customers) for empty-string gaps
-- Added `CK_Categories_Name_NotEmpty` and `CK_Customers_FirstName_LastName_NotEmpty`
-- Confirmed Payments and Inventory needed no changes (already covered by existing checks)
-- Wrote `documentation/data-quality-rules.md` — full constraint reference for all 7 tables
-- **Phase 3 (Data Quality + Constraints) complete — schema is fully hardened**
+
+Tested the remaining tables, Categories and Customers, for the same kind of empty-string gaps. Added `CK_Categories_Name_NotEmpty` and `CK_Customers_FirstName_LastName_NotEmpty`. Confirmed Payments and Inventory needed no changes, since they were already covered by existing checks. Wrote `documentation/data-quality-rules.md`, a full constraint reference for all 7 tables. This completed Phase 3 — the schema is now fully hardened.
 
 ### Day 16 — Basic SELECT Queries
-- Started `queries/basic_queries.sql` — first file in Phase 4 (SQL Querying)
-- Practiced `WHERE`, `ORDER BY`, `LIKE`, `TOP`
-- Queries written: customers by city, products under a price threshold (cheapest first), 3 most recent orders, customers with Gmail addresses
+
+Started `queries/basic_queries.sql`, the first file in Phase 4 (SQL Querying). Practiced `WHERE`, `ORDER BY`, `LIKE`, and `TOP`. Queries covered customers by city, products under a price threshold sorted cheapest first, the 3 most recent orders, and customers with Gmail addresses.
 
 ### Day 17 — First JOINs
-- Started `queries/joins.sql`
-- Joined Customers + Orders to see customer names alongside their orders
-- Joined Orders + OrderItems + Products (3-table join) to see actual product names, quantities, and prices per order
+
+Started `queries/joins.sql`. Joined Customers and Orders to see customer names alongside their orders, then joined Orders, OrderItems, and Products together in a 3-table join to see actual product names, quantities, and prices per order.
 
 ### Day 18 — Aggregate Functions and GROUP BY
-- Started `queries/aggregates.sql`
-- Practiced `COUNT`, `SUM`, `AVG` combined with `GROUP BY` on real data
-- Queries: orders grouped by status, total revenue per product (joining OrderItems + Products), average payment amount per method, and products filtered with `HAVING` based on total revenue
+
+Started `queries/aggregates.sql`. Practiced `COUNT`, `SUM`, and `AVG` combined with `GROUP BY` on real data. Queries covered orders grouped by status, total revenue per product by joining OrderItems and Products, average payment amount per method, and products filtered with `HAVING` based on total revenue.
 
 ### Day 19 — Subqueries
-- Started `queries/subqueries.sql`
-- Practiced nesting a `SELECT` inside another query's `WHERE` or `HAVING` clause
-- Queries: products priced above the average, customers who have placed at least one order (using `IN` instead of a JOIN), the single most expensive product (using `MAX`), and orders with a total value above the overall average order value
-- Key mistake caught and fixed: pointing a subquery at the wrong table/column (e.g. comparing CustomerID against OrderID) — same "which table, which column" discipline as foreign keys
+
+Started `queries/subqueries.sql`. Practiced nesting a `SELECT` inside another query's `WHERE` or `HAVING` clause. Queries covered products priced above the average, customers who have placed at least one order using `IN` instead of a join, the single most expensive product using `MAX`, and orders with a total value above the overall average order value. Along the way, caught and fixed a mistake pointing a subquery at the wrong table and column — the same "which table, which column" discipline learned earlier with foreign keys.
 
 ### Day 20 — CTEs (Common Table Expressions)
-- Started `queries/ctes.sql`
-- Rewrote subquery-style logic using `WITH ... AS (...)` for readability
-- Queries: products above average price, orders above average order value, customer order counts
+
+Started `queries/ctes.sql`. Learned `WITH name AS (...)` for naming a temporary result set, and rewrote subquery-style logic more clearly using CTEs instead of nesting. Queries covered products above average price, orders above average order value, and customer order counts.
 
 ### Day 21 — First Window Function (RANK)
-- Started `queries/window_functions.sql`
-- Learned `RANK() OVER (ORDER BY ...)` — ranks rows without collapsing them the way GROUP BY alone does
-- Queries: ranked products by total revenue generated, ranked customers by total amount spent
+
+Started `queries/window_functions.sql`. Learned `RANK() OVER (ORDER BY ...)`, which ranks rows without collapsing them the way GROUP BY alone does. Queries covered ranking products by total revenue generated and ranking customers by total amount spent.
 
 ### Day 22 — Running Totals (SUM OVER, PARTITION BY)
-- Continued `queries/window_functions.sql`
-- Learned `SUM() OVER (ORDER BY ...)` for cumulative/running totals, and `PARTITION BY` to reset a calculation separately per group
-- Queries: running total of revenue by order date, order count per customer restarting at 1 for each customer
-- **Phase 4 (SQL Querying) nearing completion** — basics, joins, aggregates, subqueries, CTEs, and window functions all covered
+
+Continued `queries/window_functions.sql`. Learned `SUM() OVER (ORDER BY ...)` for cumulative running totals, and `PARTITION BY` to reset a calculation separately per group. Queries covered a running total of revenue by order date and an order count per customer that restarts at 1 for each new customer. Along the way, debugged an "Ambiguous column name" error, the first real case of needing table aliases on every shared column name across a join.
+
+### Day 23 — Capstone Query + Phase 4 Documentation
+
+Wrote a capstone query combining a CTE, a join, GROUP BY, and PARTITION BY to find the top 2 products per category by revenue. Wrote `documentation/querying-techniques.md`, a full summary of every SQL technique learned in Phase 4. This completed Phase 4 — filtering, joins, aggregates, subqueries, CTEs, and window functions were all covered and applied to real data.
+
+### Day 24 — Sales Overview
+
+Started `analytics/sales_analysis.sql`, the first file in the analytics folder, marking the shift from Phase 4's technique-focused queries to Phase 5's business-question-focused ones. Answered three foundational sales questions using SQL already learned in Phase 4: total revenue across all orders, total revenue broken down by month using `FORMAT()` to group dates, and the average order value calculated through a subquery that first totals each order individually. No new SQL syntax was introduced; the focus was applying existing tools to real business questions rather than practice exercises.
 
 ## Folder Structure
 
@@ -133,19 +114,20 @@ EcommerceAnalytics/
 │   ├── 05_sample_data.sql
 │   └── 06_indexes.sql
 ├── documentation/
-│   └── data-quality-rules.md
+│   ├── data-quality-rules.md
+│   └── querying-techniques.md
 ├── queries/
 │   ├── basic_queries.sql
 │   ├── joins.sql
-│   ├── aggregates.sql        
-│   └── subqueries.sql        
-│   └── ctes.sql   
-│   └── window_functions.sql   ← Day 22
-│
+│   ├── aggregates.sql
+│   ├── subqueries.sql
+│   ├── ctes.sql
+│   └── window_functions.sql
+├── analytics/
+│   └── sales_analysis.sql
 ├── views/
 ├── procedures/
 ├── functions/
-├── analytics/
 ├── powerbi/
 ├── backend/
 └── frontend/
@@ -153,7 +135,4 @@ EcommerceAnalytics/
 
 ## How to Run
 
-1. Open SQL Server Management Studio (or Azure Data Studio).
-2. Run scripts in `database/` **in numeric order** (01 → 06).
-3. Verify with `SELECT * FROM dbo.Customers;`
-4. Explore query examples in `queries/basic_queries.sql`.
+Open SQL Server Management Studio or Azure Data Studio. Run the scripts in `database/` in numeric order, from 01 to 06. Verify the setup with `SELECT * FROM dbo.Customers;`. From there, explore the query examples in `queries/`, where each file covers one SQL technique in the order it was learned, and `analytics/` for business-question queries.
