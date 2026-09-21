@@ -14,7 +14,7 @@ Database: SQL Server (T-SQL). Analytics/BI: Power BI. Backend: FastAPI (Python).
 | 2 | Tables + Relationships | ✅ Done (Days 7–12) |
 | 3 | Data Quality + Constraints | ✅ Done (Days 13–15) |
 | 4 | SQL Querying | ✅ Done (Days 16–23) |
-| 5 | Business Analytics | 🟡 In progress (started Day 24, runs 24–30) |
+| 5 | Business Analytics | 🟡 In progress (started Day 27, runs 24–30) |
 | 6 | Views + Procedures + Functions | ⬜ Not started (Days 31–35) |
 | 7 | Performance Optimization | ⬜ Not started (Days 36–39) |
 | 8 | Security | ⬜ Not started (Days 40–42) |
@@ -102,6 +102,17 @@ Wrote a capstone query combining a CTE, a join, GROUP BY, and PARTITION BY to fi
 
 Started `analytics/sales_analysis.sql`, the first file in the analytics folder, marking the shift from Phase 4's technique-focused queries to Phase 5's business-question-focused ones. Answered three foundational sales questions using SQL already learned in Phase 4: total revenue across all orders, total revenue broken down by month using `FORMAT()` to group dates, and the average order value calculated through a subquery that first totals each order individually. No new SQL syntax was introduced; the focus was applying existing tools to real business questions rather than practice exercises.
 
+### Day 25 — Product Performance
+
+Started `analytics/product_analysis.sql`. Answered three product-focused questions: total revenue broken down by category, the top 5 products by quantity sold rather than revenue, and the lowest 3 performing products by revenue using ascending order instead of descending. Same SQL tools as Phase 4, applied to a different angle of the business.
+
+### Day 26 — Top Customers & Spending
+
+Started `analytics/customer_analysis.sql`. Answered three customer-focused questions: the top 5 customers by total spend, the number of orders placed per customer, and customers who spent above the average customer spend, using a CTE combined with a subquery.
+
+### Day 27 — Repeat Customers & Segmentation
+
+Continued `analytics/customer_analysis.sql`. Identified repeat customers using `HAVING COUNT(...) > 1`, introduced `CASE` to label customers as "High Value" or "Regular" based on total spend, and wrote the project's first `LEFT JOIN` to find customers with zero orders — a question `INNER JOIN` alone couldn't answer, since it would hide exactly those unmatched rows.
 ## Folder Structure
 
 ```
@@ -124,7 +135,9 @@ EcommerceAnalytics/
 │   ├── ctes.sql
 │   └── window_functions.sql
 ├── analytics/
-│   └── sales_analysis.sql
+│   ├── sales_analysis.sql
+│   ├── product_analysis.sql
+│   └── customer_analysis.sql
 ├── views/
 ├── procedures/
 ├── functions/
