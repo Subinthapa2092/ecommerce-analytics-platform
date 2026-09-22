@@ -62,3 +62,21 @@ from dbo.Customers as c
 left join dbo.orders as o 
 on c.CustomerID = o.CustomerID 
 where o.orderid is null;
+
+use EcommerceAnalytics;
+-- 1. New customers per month (based on when their first order was placed)
+-- Concept: "new customer" = someone whose EARLIEST order falls in that month 
+with FirstOrderPerCustomer as (
+select CustomerID,min(orderdate) as firstorderdate from dbo.orders group by customerid )
+select format(firstorderdate,'yyyy-mm') as month,count(*) as newcustomers 
+from FirstOrderPerCustomer 
+group by format(firstorderdate,'yyyy-mm') order by month;
+--- 2nd Running total of customer growth over time (combines today's CTE with Day 22's running total)
+with firstorderpercustomer as(
+select customerid,min(orderdate) as firstorderdate
+from dbo.orders group by customerid),
+monthlynew as (select format(firstorderdate,'yyyy-mm') as month,count(*) as newcustomers
+from firstorderpercustomer group by format(firstorderdate,'yyyy-mm'))
+select month,NewCustomers,sum(Newcustomers) over (order by cast(month as varchar(7))) as cumulativeCustomers 
+from monthlynew 
+order by month;
