@@ -14,7 +14,7 @@ Database: SQL Server (T-SQL). Analytics/BI: Power BI. Backend: FastAPI (Python).
 | 2 | Tables + Relationships | ✅ Done (Days 7–12) |
 | 3 | Data Quality + Constraints | ✅ Done (Days 13–15) |
 | 4 | SQL Querying | ✅ Done (Days 16–23) |
-| 5 | Business Analytics | 🟡 In progress (started Day 27, runs 24–30) |
+| 5 | Business Analytics | 🟡 In progress (started Day 28, runs 24–30) |
 | 6 | Views + Procedures + Functions | ⬜ Not started (Days 31–35) |
 | 7 | Performance Optimization | ⬜ Not started (Days 36–39) |
 | 8 | Security | ⬜ Not started (Days 40–42) |
@@ -113,6 +113,11 @@ Started `analytics/customer_analysis.sql`. Answered three customer-focused quest
 ### Day 27 — Repeat Customers & Segmentation
 
 Continued `analytics/customer_analysis.sql`. Identified repeat customers using `HAVING COUNT(...) > 1`, introduced `CASE` to label customers as "High Value" or "Regular" based on total spend, and wrote the project's first `LEFT JOIN` to find customers with zero orders — a question `INNER JOIN` alone couldn't answer, since it would hide exactly those unmatched rows.
+
+### Day 28 — Customer Acquisition Trends
+
+Continued `analytics/customer_analysis.sql`. Used `MIN(OrderDate)` per customer inside a CTE to find each customer's first order date, then grouped by month to count new customers acquired over time. Combined that with a running total (`SUM() OVER (ORDER BY month)`) to track cumulative customer growth. Debugged several mistakes along the way: grouping by a raw date column instead of its formatted version, and referencing a column from an earlier CTE that was no longer in scope in a later CTE — each CTE in a chain only sees the columns it defines itself, not columns from CTEs further back.
+
 ## Folder Structure
 
 ```
