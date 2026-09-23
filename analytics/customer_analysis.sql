@@ -80,3 +80,33 @@ from firstorderpercustomer group by format(firstorderdate,'yyyy-mm'))
 select month,NewCustomers,sum(Newcustomers) over (order by cast(month as varchar(7))) as cumulativeCustomers 
 from monthlynew 
 order by month;
+
+-- Day 29 
+--- 1. Full CLV view: total spend, number of orders, average order value, and days as a customer
+SELECT 
+    c.CustomerID,
+    c.FirstName, 
+    c.LastName,
+    COUNT(DISTINCT o.OrderID) AS TotalOrders,
+    SUM(oi.Quantity * oi.UnitPrice) AS LifetimeValue,
+    SUM(oi.Quantity * oi.UnitPrice) / COUNT(DISTINCT o.OrderID) AS AvgOrderValue,
+    DATEDIFF(DAY, MIN(o.OrderDate), MAX(o.OrderDate)) AS DaysAsCustomer
+FROM dbo.Customers c
+JOIN dbo.Orders o ON c.CustomerID = o.CustomerID
+JOIN dbo.OrderItems oi ON o.OrderID = oi.OrderID
+GROUP BY c.CustomerID,c.FirstName,c.LastName
+ORDER BY LifetimeValue DESC;
+
+--- 2) 2. Segment customers into CLV tiers using CASE (like Day 27, different thresholds)
+SELECT 
+    c.FirstName, c.LastName,
+    SUM(oi.Quantity * oi.UnitPrice) AS LifetimeValue,
+    CASE
+        WHEN SUM(oi.Quantity * oi.UnitPrice) >= 1000 THEN 'Platinum'
+        WHEN SUM(oi.Quantity * oi.UnitPrice) >= 500 THEN 'Gold'
+        ELSE 'Standard'
+    END AS CLVTier
+FROM dbo.Customers c
+JOIN dbo.Orders o ON c.CustomerID = o.CustomerID
+JOIN dbo.OrderItems oi ON o.OrderID = oi.OrderID
+GROUP BY c.CustomerID, c.FirstName, c.LastName;

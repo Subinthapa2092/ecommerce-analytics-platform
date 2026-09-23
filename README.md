@@ -118,6 +118,12 @@ Continued `analytics/customer_analysis.sql`. Identified repeat customers using `
 
 Continued `analytics/customer_analysis.sql`. Used `MIN(OrderDate)` per customer inside a CTE to find each customer's first order date, then grouped by month to count new customers acquired over time. Combined that with a running total (`SUM() OVER (ORDER BY month)`) to track cumulative customer growth. Debugged several mistakes along the way: grouping by a raw date column instead of its formatted version, and referencing a column from an earlier CTE that was no longer in scope in a later CTE — each CTE in a chain only sees the columns it defines itself, not columns from CTEs further back.
 
+### Day 29 — Customer Lifetime Value (CLV)
+
+Continued `analytics/customer_analysis.sql`. Built a full CLV view combining total orders, lifetime spend, average order value, and days as a customer using `DATEDIFF` between a customer's first and last order. Segmented customers into Platinum/Gold/Standard tiers using CASE with different spend thresholds than Day 27's simpler two-tier segmentation.
+
+
+
 ## Folder Structure
 
 ```
