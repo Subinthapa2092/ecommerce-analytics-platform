@@ -14,8 +14,8 @@ Database: SQL Server (T-SQL). Analytics/BI: Power BI. Backend: FastAPI (Python).
 | 2 | Tables + Relationships | ✅ Done (Days 7–12) |
 | 3 | Data Quality + Constraints | ✅ Done (Days 13–15) |
 | 4 | SQL Querying | ✅ Done (Days 16–23) |
-| 5 | Business Analytics | 🟡 In progress (started Day 28, runs 24–30) |
-| 6 | Views + Procedures + Functions | ⬜ Not started (Days 31–35) |
+| 5 | Business Analytics | ✅ Done (Days 24–30) |
+| 6 | Views + Procedures + Functions | 🟡 In progress (started Day 31, runs 31–35) |
 | 7 | Performance Optimization | ⬜ Not started (Days 36–39) |
 | 8 | Security | ⬜ Not started (Days 40–42) |
 | 9 | Power BI Dashboard | ⬜ Not started (Days 43–47) |
@@ -123,7 +123,9 @@ Continued `analytics/customer_analysis.sql`. Used `MIN(OrderDate)` per customer 
 Continued `analytics/customer_analysis.sql`. Built a full CLV view combining total orders, lifetime spend, average order value, and days as a customer using `DATEDIFF` between a customer's first and last order. Segmented customers into Platinum/Gold/Standard tiers using CASE with different spend thresholds than Day 27's simpler two-tier segmentation.
 
 
+### Day 30 — Business Summary Capstone
 
+Wrote a capstone query combining a CTE, JOIN, GROUP BY, `RANK()`, and `CASE` into one business summary: each customer's lifetime value, total orders, spend rank, and CLV tier all in a single result set. Wrote `documentation/business-questions-answered.md`, summarizing every business question answered across Phase 5. This completed Phase 5 (Business Analytics) — sales
 ## Folder Structure
 
 ```
@@ -138,6 +140,8 @@ EcommerceAnalytics/
 ├── documentation/
 │   ├── data-quality-rules.md
 │   └── querying-techniques.md
+│    └── business-questions-answered.md
+│
 ├── queries/
 │   ├── basic_queries.sql
 │   ├── joins.sql

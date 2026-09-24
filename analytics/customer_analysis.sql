@@ -110,3 +110,33 @@ FROM dbo.Customers c
 JOIN dbo.Orders o ON c.CustomerID = o.CustomerID
 JOIN dbo.OrderItems oi ON o.OrderID = oi.OrderID
 GROUP BY c.CustomerID, c.FirstName, c.LastName;
+
+-- Day 30: Customer Summary in One Query
+-- Business Summary: revenue, rank, and value tier per customer, in one query
+use EcommerceAnalytics;
+go
+WITH CustomerRevenue AS (
+    SELECT 
+        c.CustomerID,
+        c.FirstName,
+        c.LastName,
+        SUM(oi.Quantity * oi.UnitPrice) AS LifetimeValue,
+        COUNT(DISTINCT o.OrderID) AS TotalOrders
+    FROM dbo.Customers c
+    JOIN dbo.Orders o ON c.CustomerID = o.CustomerID
+    JOIN dbo.OrderItems oi ON o.OrderID = oi.OrderID
+    GROUP BY c.CustomerID, c.FirstName, c.LastName
+)
+SELECT
+    FirstName,
+    LastName,
+    LifetimeValue,
+    TotalOrders,
+    RANK() OVER (ORDER BY LifetimeValue  DESC) AS SpendRank,
+    CASE
+        WHEN LifetimeValue >= 1000 THEN 'Platinum'
+        WHEN LifetimeValue >= 500 THEN 'Gold'
+        ELSE 'Standard'
+    END AS CLVTier
+FROM CustomerRevenue
+ORDER BY SpendRank;
